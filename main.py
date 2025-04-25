@@ -3,6 +3,7 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 import yaml
+from job_searcher import generate_daily_report, generate_weekly_summary
 
 with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
@@ -17,7 +18,6 @@ user_status = {}
 def callback():
     signature = request.headers["X-Line-Signature"]
     body = request.get_data(as_text=True)
-
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
@@ -38,11 +38,14 @@ def handle_message(event):
     elif msg in ["狀態", "我的狀態"]:
         enabled = user_status.get(uid, False)
         reply = f"🔍 目前搜尋功能：{'啟動中 ✅' if enabled else '暫停中 ⏸'}"
+    elif msg in ["今日推薦", "today"]:
+        reply = generate_daily_report()
+    elif msg in ["本週總結", "週報", "summary"]:
+        reply = generate_weekly_summary()
     else:
-        reply = "請輸入：啟動職缺搜尋、暫停職缺搜尋 或 狀態"
+        reply = "請輸入：啟動職缺搜尋、暫停職缺搜尋、狀態、今日推薦、或 本週總結"
 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
-
