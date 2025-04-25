@@ -1,1 +1,1 @@
-# job_searcher.py 內容省略（佔位）
+# 職缺整合與 GPT 分析

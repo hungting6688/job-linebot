@@ -2,12 +2,13 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+import os
+from job_searcher import generate_daily_report, generate_weekly_summary
+
+line_bot_api = LineBotApi(os.getenv("CHANNEL_ACCESS_TOKEN"))
+handler = WebhookHandler(os.getenv("CHANNEL_SECRET"))
 
 app = Flask(__name__)
-
-# ✅ 使用你提供的 Token 與 Secret（請保密）
-line_bot_api = LineBotApi('g66Y9p1FahGE6WC+Ts4uOPkkYwrbPjcc9CotOkNDoBEKkPAgD6dw6vL5Yk07YZfh4ZZNhgvaKCRA6VbF5Qfx8V1k0/7sFKMgro42Ol7sbzdVD4NAWQljqqKlmGYrd1kO9w87shDV4wZR5kOwX8jJ2AdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('70970e9b83dad47b74fd7c4cb99df507')
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -23,11 +24,17 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    user_text = event.message.text
-    reply_text = f"✅ 我收到你的訊息了：{user_text}"
+    msg = event.message.text.strip().lower()
+    if msg == "/今日推薦":
+        reply = generate_daily_report()
+    elif msg in ["/週報", "/本週總結"]:
+        reply = generate_weekly_summary()
+    else:
+        reply = f"✅ 我收到你的訊息了：{msg}"
+
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=reply_text)
+        TextSendMessage(text=reply)
     )
 
 if __name__ == "__main__":

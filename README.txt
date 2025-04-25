@@ -1,1 +1,1 @@
-# README.txt 內容省略（佔位）
+部署說明：使用 os.getenv() 讀取機密。請到 Render 設定 CHANNEL_ACCESS_TOKEN、CHANNEL_SECRET、OPENAI_API_KEY

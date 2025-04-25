@@ -1,1 +1,1 @@
-# remotive.py 模組內容省略
+# remotive.py 模組

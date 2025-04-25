@@ -1,1 +1,1 @@
-# xpatjobs.py 模組內容省略
+# xpatjobs.py 模組

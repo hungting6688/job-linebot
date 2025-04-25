@@ -1,1 +1,1 @@
-# gpt_summarizer.py 內容省略（佔位）
+# GPT 摘要模組

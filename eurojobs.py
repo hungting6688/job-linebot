@@ -1,1 +1,1 @@
-# eurojobs.py 模組內容省略
+# eurojobs.py 模組
