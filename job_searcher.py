@@ -1,17 +1,20 @@
 from gpt_summarizer import summarize_jobs
-import json
+from utils import load_user_config, save_history
 
-def get_jobs():
-    return [
-        "台灣大哥大 徵數據分析師，月薪 60,000 元，需出差",
-        "聯發科 徵海外業務專員，需商務英文，Asia market 經驗",
-        "X公司招募 AI 工程師，薪資 negotiable，可 remote"
+def fetch_jobs(user_id):
+    config = load_user_config(user_id)
+    jobs = [
+        f"{config['location']}某大公司 徵後端工程師，薪資 {config['salary']}",
+        f"{config['location']}外商企業 招聘 AI 助理，彈性遠距",
+        f"{config['location']} 初創科技 徵數據分析師，Asia market，薪資 negotiable"
     ]
+    return jobs
 
 def generate_daily_report(user_id):
-    jobs = get_jobs()
+    jobs = fetch_jobs(user_id)
     summary = summarize_jobs(jobs)
-    return f"📢 今日推薦職缺：\n" + "\n".join(jobs) + "\n---\n🤖 GPT 分析摘要：\n" + summary
+    save_history(user_id, jobs, summary)
+    return "\n".join(["📌 推薦職缺："] + jobs + ["\n🤖 GPT 分析：", summary])
 
 def generate_weekly_summary(user_id):
-    return "📊 本週推薦總結功能開發中..."
+    return "📊 週報功能開發中，敬請期待！"

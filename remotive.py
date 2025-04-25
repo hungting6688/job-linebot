@@ -1,1 +1,1 @@
-# remotive.py 爬蟲模組
+# remotive.py 模組（實作中）
