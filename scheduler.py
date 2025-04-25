@@ -18,8 +18,8 @@ def push_daily():
     except Exception as e:
         print("❌ 推播失敗：", e)
 
+# 改為晚上 19:00（7:00 PM）
 schedule.every().day.at("19:00").do(push_daily)
-
 
 if __name__ == "__main__":
     print("✅ Scheduler 啟動中，等待每日 19:00 推播")
