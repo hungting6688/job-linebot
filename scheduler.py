@@ -18,10 +18,10 @@ def push_daily():
     except Exception as e:
         print("❌ 推播失敗：", e)
 
-schedule.every().day.at("12:00").do(push_daily)
+schedule.every().day.at("09:00").do(push_daily)
 
 if __name__ == "__main__":
-    print("✅ Scheduler 啟動中，等待每日 12:00 推播")
+    print("✅ Scheduler 啟動中，等待每日 09:00 推播")
     while True:
         schedule.run_pending()
         time.sleep(60)
