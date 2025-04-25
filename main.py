@@ -1,1 +1,1 @@
-# LINE Bot 主程式
+# main.py 內容省略（佔位）

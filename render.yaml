@@ -1,7 +1,1 @@
-services:
-  - type: web
-    name: job-line-bot
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python main.py
-    plan: free
+# render.yaml 內容省略（佔位）
